@@ -11,20 +11,26 @@ Creá una función llamada `calcularArea` que:
 
 // 1. Declarar variable global "unidad"
 // TU CÓDIGO AQUÍ
+let unidad = "metros cuadrados";
 
 function calcularArea() {
   // 2. Declarar variables locales ancho y alto
   // TU CÓDIGO AQUÍ
+  let ancho = 5;
+  let alto = 10;
 
   // 3. Calcular área (ancho * alto)
   // TU CÓDIGO AQUÍ
+  let area = ancho * alto;
 
   // 4. Mostrar resultado con unidad
   // TU CÓDIGO AQUÍ
+  console.log(`${area} ${unidad}`);
 }
 
 // 5. Llamar a la función
 calcularArea();
 
 // 6. Intentar acceder a "area" (va a dar error)
+// console.log(`${area} ${unidad}`);
 // console.log(area);  // Descomentar esta línea para ver el error
