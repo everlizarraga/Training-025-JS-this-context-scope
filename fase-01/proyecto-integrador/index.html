@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto 1 - Validador de Formulario</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #666;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* Estados de validación */
+    input.error {
+      border-color: #e74c3c;
+      background-color: #ffeaea;
+    }
+
+    input.success {
+      border-color: #2ecc71;
+      background-color: #eafaf1;
+    }
+
+    /* Mensajes de error */
+    .error-message {
+      color: #e74c3c;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+      font-weight: 500;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    /* Mensaje de éxito */
+    .success-message {
+      color: #2ecc71;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+      font-weight: 500;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Mensaje final de éxito */
+    .form-success {
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      display: none;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .form-success.show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>📋 Formulario de Registro</h1>
+    <p class="subtitle">Completa todos los campos correctamente</p>
+
+    <div class="form-success" id="formSuccess">
+      ✅ ¡Formulario enviado exitosamente!
+    </div>
+
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez">
+        <div class="error-message" id="nombreError"></div>
+        <div class="success-message" id="nombreSuccess">✓ Válido</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Ej: juan@example.com">
+        <div class="error-message" id="emailError"></div>
+        <div class="success-message" id="emailSuccess">✓ Válido</div>
+      </div>
+
+      <div class="form-group">
+        <label for="edad">Edad</label>
+        <input type="number" id="edad" name="edad" placeholder="Ej: 25">
+        <div class="error-message" id="edadError"></div>
+        <div class="success-message" id="edadSuccess">✓ Válido</div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres">
+        <div class="error-message" id="passwordError"></div>
+        <div class="success-message" id="passwordSuccess">✓ Válido</div>
+      </div>
+
+      <button type="submit">REGISTRAR</button>
+    </form>
+  </div>
+
+  <!-- Tu código JavaScript va aquí -->
+  <script src="./app.js"></script>
+</body>
+
+</html>
