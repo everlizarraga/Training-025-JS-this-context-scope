@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fase03 - Eje05</title>
+  <style>
+    .imagen {
+      border: 2px solid gray;
+      cursor: pointer;
+    }
+
+    .seleccionada {
+      border: 4px solid blue;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="galeria">
+    <img src="img1.jpg" class="imagen" alt="Imagen 1">
+    <img src="img2.jpg" class="imagen" alt="Imagen 2">
+    <img src="img3.jpg" class="imagen" alt="Imagen 3">
+  </div>
+  <p id="info">Ninguna imagen seleccionada</p>
+  <script>
+    const galeria = {
+      imagenActual: null,
+      infoDisplay: null,
+
+      init: function () {
+        const imagenes = document.querySelectorAll('.imagen');
+        this.infoDisplay = document.getElementById('info');
+
+        // Agregar event listener a cada imagen
+        imagenes.forEach((img) => {
+          // TU CÓDIGO AQUÍ
+          // Usar arrow function para mantener "this" = galeria
+          // Llamar a this.seleccionar(img)
+          img.addEventListener('click', () => {
+            this.seleccionar(img);
+          });
+        });
+      },
+
+      seleccionar: function (imagen) {
+        // 1. Quitar clase "seleccionada" de la imagen anterior
+        if (this.imagenActual) {
+          this.imagenActual.classList.remove('seleccionada');
+        }
+
+        // 2. Agregar clase a la nueva imagen
+        // TU CÓDIGO AQUÍ
+        imagen.classList.add('seleccionada');
+
+        // 3. Actualizar imagenActual
+        // TU CÓDIGO AQUÍ
+        this.imagenActual = imagen;
+
+        // 4. Actualizar display de info
+        // TU CÓDIGO AQUÍ
+        this.infoDisplay.textContent = `Seleccionada: ${imagen.alt}`;
+      }
+    };
+
+    // Inicializar al cargar página
+    document.addEventListener('DOMContentLoaded', () => {
+      galeria.init();
+    });
+  </script>
+</body>
+
+</html>
