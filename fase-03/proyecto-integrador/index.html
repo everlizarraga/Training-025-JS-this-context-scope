@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Interactivo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .dashboard {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .dashboard-header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .dashboard-header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .widgets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .widget {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .widget:hover {
+      transform: translateY(-5px);
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .widget-icon {
+      font-size: 2rem;
+      margin-right: 15px;
+    }
+
+    .widget-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .widget-content {
+      min-height: 150px;
+    }
+
+    /* Widget Reloj */
+    .reloj-display {
+      font-size: 3rem;
+      font-weight: bold;
+      text-align: center;
+      color: #667eea;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Widget Contador */
+    .contador-display {
+      font-size: 4rem;
+      font-weight: bold;
+      text-align: center;
+      color: #764ba2;
+      margin: 20px 0;
+    }
+
+    .contador-controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    /* Widget Usuario */
+    .usuario-card {
+      text-align: center;
+    }
+
+    .usuario-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0px auto;
+      border: 4px solid #667eea;
+    }
+
+    .usuario-info {
+      margin-top: 5px;
+    }
+
+    .usuario-info p {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .loading {
+      text-align: center;
+      color: #999;
+      font-style: italic;
+    }
+
+    .error {
+      text-align: center;
+      color: #e74c3c;
+      padding: 15px;
+      background: #ffe6e6;
+      border-radius: 8px;
+    }
+
+    /* Widget Tareas */
+    .tareas-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tareas-input-group input {
+      flex: 1;
+    }
+
+    .tareas-lista {
+      list-style: none;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .tarea-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      margin-bottom: 8px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .tarea-item:hover {
+      background: #e9ecef;
+    }
+
+    .tarea-item.completada {
+      opacity: 0.6;
+    }
+
+    .tarea-item.completada .tarea-texto {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .tarea-texto {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .tarea-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Botones */
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+    }
+
+    .btn-success {
+      background: #51cf66;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background: #40c057;
+    }
+
+    .btn-danger {
+      background: #ff6b6b;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background: #fa5252;
+    }
+
+    .btn-secondary {
+      background: #868e96;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #6c757d;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+
+    input[type="text"] {
+      padding: 10px 15px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    /* Estados vacíos */
+    .empty-state {
+      text-align: center;
+      color: #999;
+      padding: 30px;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <div class="dashboard-header">
+      <h1>📊 Dashboard Interactivo</h1>
+      <p>Proyecto 3 - Manejo de "this" en JavaScript</p>
+    </div>
+
+    <!-- Grid de Widgets -->
+    <div class="widgets-grid">
+      <!-- Widget 1: Reloj -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-icon">🕐</span>
+          <h2 class="widget-title">Reloj</h2>
+        </div>
+        <div class="widget-content" id="widget-reloj">
+          <!-- Contenido dinámico -->
+        </div>
+      </div>
+
+      <!-- Widget 2: Contador -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-icon">🔢</span>
+          <h2 class="widget-title">Contador</h2>
+        </div>
+        <div class="widget-content" id="widget-contador">
+          <!-- Contenido dinámico -->
+        </div>
+      </div>
+
+      <!-- Widget 3: Usuario -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-icon">👤</span>
+          <h2 class="widget-title">Usuario Random</h2>
+        </div>
+        <div class="widget-content" id="widget-usuario">
+          <!-- Contenido dinámico -->
+        </div>
+      </div>
+
+      <!-- Widget 4: Tareas -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-icon">✅</span>
+          <h2 class="widget-title">Mis Tareas</h2>
+        </div>
+        <div class="widget-content" id="widget-tareas">
+          <!-- Contenido dinámico -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+
+</html>
