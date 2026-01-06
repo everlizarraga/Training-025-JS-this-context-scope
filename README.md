@@ -453,7 +453,7 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 **[Tu Nombre]**
 
-- 🌐 Portfolio: [everlizarraga.github.io](#)
+- 🌐 Portfolio: [everlizarraga.github.io](https://everlizarraga.github.io/)
 - 🐙 GitHub: [@everlizarraga](https://github.com/everlizarraga)
 - 📧 Email: rolank.utn@gmail.com
 
