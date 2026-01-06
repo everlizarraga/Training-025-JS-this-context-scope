@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Plugins</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .panel h2 {
+      margin-bottom: 20px;
+      color: #333;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .plugin-list {
+      list-style: none;
+    }
+
+    .plugin-item {
+      padding: 15px;
+      margin-bottom: 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .plugin-item:hover {
+      background: #e9ecef;
+      transform: translateX(5px);
+    }
+
+    .plugin-item.active {
+      background: #d4edda;
+      border-left: 4px solid #28a745;
+    }
+
+    .plugin-item.inactive {
+      background: #f8d7da;
+      border-left: 4px solid #dc3545;
+    }
+
+    .plugin-info {
+      flex: 1;
+    }
+
+    .plugin-name {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    .plugin-status {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-success {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+    }
+
+    .task-executor {
+      margin-bottom: 20px;
+    }
+
+    .task-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .task-input-group input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #e9ecef;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .task-input-group input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .logs-container {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 15px;
+      border-radius: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+
+    .log-entry {
+      margin-bottom: 8px;
+      padding: 5px;
+      border-left: 3px solid #667eea;
+      padding-left: 10px;
+    }
+
+    .log-entry.error {
+      border-left-color: #dc3545;
+      color: #ff6b6b;
+    }
+
+    .log-entry.success {
+      border-left-color: #28a745;
+      color: #51cf66;
+    }
+
+    .log-entry.info {
+      border-left-color: #17a2b8;
+      color: #4dabf7;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+
+    /* AGREGAR ESTO en el <style> */
+    .result-display {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    .result-value {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #667eea;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>🔌 Sistema de Plugins</h1>
+      <p>Proyecto Final - Integración de Todas las Fases</p>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+      <!-- Sidebar: Plugins -->
+      <div class="panel">
+        <h2>Plugins Instalados</h2>
+        <ul class="plugin-list" id="plugin-list">
+          <!-- Plugins se renderizan aquí -->
+        </ul>
+      </div>
+
+      <!-- Main Panel -->
+      <div>
+        <!-- Task Executor -->
+        <div class="panel task-executor">
+          <h2>Ejecutar Tarea</h2>
+
+          <!-- Stats -->
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-value" id="stat-tasks">0</div>
+              <div class="stat-label">Tareas ejecutadas</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-cache-hits">0</div>
+              <div class="stat-label">Cache hits</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-plugins">0</div>
+              <div class="stat-label">Plugins activos</div>
+            </div>
+          </div>
+
+          <!-- Input -->
+          <div class="task-input-group">
+            <input type="text" id="task-input" placeholder="Ingresa un número (ej: 5)">
+            <button class="btn btn-primary" id="btn-execute">Ejecutar</button>
+            <button class="btn btn-danger" id="btn-clear-logs">Limpiar logs</button>
+          </div>
+          <div class="result-display" id="result-display">
+            <div class="result-label">Resultado:</div>
+            <div class="result-value" id="result-value">-</div>
+          </div>
+        </div>
+
+        <!-- Logs Panel -->
+        <div class="panel">
+          <h2>Logs del Sistema</h2>
+          <div class="logs-container" id="logs-container">
+            <div class="log-entry info">Sistema iniciado...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="plugin-system.js"></script>
+  <script src="plugins/logger.js"></script>
+  <script src="plugins/validator.js"></script>
+  <script src="plugins/cache.js"></script>
+  <script>
+    // Inicializar sistema
+    document.addEventListener('DOMContentLoaded', () => {
+      PluginSystem.init();
+    });
+  </script>
+</body>
+
+</html>
